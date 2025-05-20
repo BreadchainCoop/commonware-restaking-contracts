@@ -43,8 +43,7 @@ contract Counter is BLSSigCheckOperatorStateRetriever, BLSSignatureChecker {
 
         bytes32 expectedHash = sha256(abi.encode(number));
         require(msgHash == expectedHash, InvalidHash());
-         (QuorumStakeTotals memory stakeTotals,) =
-        checkSignatures(msgHash, quorumNumbers, referenceBlockNumber, params);
+        (QuorumStakeTotals memory stakeTotals,) = checkSignatures(msgHash, quorumNumbers, referenceBlockNumber, params);
 
         // Check that signatories own at least 66% of each quorum
         for (uint256 i = 0; i < quorumNumbers.length; i++) {
@@ -54,7 +53,6 @@ contract Counter is BLSSigCheckOperatorStateRetriever, BLSSignatureChecker {
                 InsufficientQuorumThreshold()
             );
         }
-
         number++;
     }
 }
