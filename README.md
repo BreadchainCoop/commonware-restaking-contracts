@@ -53,13 +53,29 @@ cp example.env .env
 
 
 ### Deploy
-### Environment Variables
 
-Before deploying, make sure to set the `REGISTRY_COORDINATOR_ADDRESS` environment variable:
+#### Deploy BLSSigCheckOperatorStateRetriever
+
+To deploy the BLSSigCheckOperatorStateRetriever contract:
 
 ```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
+$ forge script script/DeployBLSSigCheck.s.sol:DeployBLSSigCheckScript --rpc-url <your_rpc_url> --private-key <your_private_key> --broadcast
 ```
+
+This will deploy the BLSSigCheckOperatorStateRetriever contract and output its deployed address.
+
+### Environment Variables
+
+Before deploying, make sure to set the `REGISTRY_COORDINATOR_ADDRESS` environment variable in your `.env` file.
+
+#### Deploy Counter
+
+To deploy the Counter contract:
+
+```shell
+$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key> --broadcast
+```
+
 
 ### Cast
 
