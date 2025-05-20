@@ -1,15 +1,12 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
-
-import {BLSSigCheckOperatorStateRetriever} from
-    "lib/eigenlayer-middleware/src/unaudited/BLSSigCheckOperatorStateRetriever.sol";
 import {BLSSignatureChecker} from "lib/eigenlayer-middleware/src/BLSSignatureChecker.sol";
 import {ISlashingRegistryCoordinator} from "lib/eigenlayer-middleware/src/interfaces/ISlashingRegistryCoordinator.sol";
 
-contract Counter is BLSSigCheckOperatorStateRetriever, BLSSignatureChecker {
+contract Counter is BLSSignatureChecker {
     /// @title Counter
     /// @notice A simple counter contract that implements BLS signature checking
-    /// @dev Inherits from BLSSigCheckOperatorStateRetriever and BLSSignatureChecker
+    /// @dev Inherits from BLSSignatureChecker
     /// @param _registryCoordinator The address of the registry coordinator contract
 
     /// @notice The current number
