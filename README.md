@@ -44,8 +44,18 @@ $ forge snapshot
 ```shell
 $ anvil
 ```
+### Environment Setup
+
+Copy the example environment file and update it with your values:
+```shell 
+cp example.env .env
+```
+
 
 ### Deploy
+### Environment Variables
+
+Before deploying, make sure to set the `REGISTRY_COORDINATOR_ADDRESS` environment variable:
 
 ```shell
 $ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
