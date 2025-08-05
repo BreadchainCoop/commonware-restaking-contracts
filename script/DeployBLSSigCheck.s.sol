@@ -2,7 +2,8 @@
 pragma solidity ^0.8.13;
 
 import {Script, console} from "forge-std/Script.sol";
-import {BLSSigCheckOperatorStateRetriever} from "lib/eigenlayer-middleware/src/unaudited/BLSSigCheckOperatorStateRetriever.sol";
+import {BLSSigCheckOperatorStateRetriever} from
+    "lib/eigenlayer-middleware/src/unaudited/BLSSigCheckOperatorStateRetriever.sol";
 
 contract DeployBLSSigCheckScript is Script {
     BLSSigCheckOperatorStateRetriever public blsSigCheck;
@@ -25,7 +26,7 @@ contract DeployBLSSigCheckScript is Script {
     function _writeDeploymentJson(uint256 chainId) internal {
         string memory outputPath = "script/deployments/bls-sig-check/";
         string memory fileName = string.concat(outputPath, vm.toString(chainId), ".json");
-        
+
         // Create directory if it doesn't exist
         if (!vm.exists(outputPath)) {
             vm.createDir(outputPath, true);
@@ -40,15 +41,21 @@ contract DeployBLSSigCheckScript is Script {
 
     function _generateDeploymentJson() private view returns (string memory) {
         return string.concat(
-            '{\n',
+            "{\n",
             '  "lastUpdate": {\n',
-            '    "timestamp": "', vm.toString(block.timestamp), '",\n',
-            '    "block_number": "', vm.toString(block.number), '"\n',
-            '  },\n',
+            '    "timestamp": "',
+            vm.toString(block.timestamp),
+            '",\n',
+            '    "block_number": "',
+            vm.toString(block.number),
+            '"\n',
+            "  },\n",
             '  "addresses": {\n',
-            '    "blsSigCheck": "', vm.toString(address(blsSigCheck)), '"\n',
-            '  }\n',
-            '}'
+            '    "blsSigCheck": "',
+            vm.toString(address(blsSigCheck)),
+            '"\n',
+            "  }\n",
+            "}"
         );
     }
-} 
+}
