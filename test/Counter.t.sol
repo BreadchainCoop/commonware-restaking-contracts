@@ -145,20 +145,4 @@ contract CounterTest is BLSMockAVSDeployer {
         vm.expectRevert(); // Expect some revert (likely BLS signature verification failure)
         counter.increment(correctHash, quorumNumbers, referenceBlockNumber, nonSignerStakesAndSignature);
     }
-
-    function test_HashValidationLogic() public {
-        // Test that the hash validation logic works correctly
-        bytes32 hashForZero = sha256(abi.encode(0));
-        bytes32 hashForOne = sha256(abi.encode(1));
-        bytes32 hashForTwo = sha256(abi.encode(2));
-
-        // These should all be different
-        assertTrue(hashForZero != hashForOne, "Hash for 0 should not equal hash for 1");
-        assertTrue(hashForOne != hashForTwo, "Hash for 1 should not equal hash for 2");
-        assertTrue(hashForZero != hashForTwo, "Hash for 0 should not equal hash for 2");
-
-        // Test that the same number produces the same hash
-        assertEq(sha256(abi.encode(0)), sha256(abi.encode(0)), "Same number should produce same hash");
-        assertEq(sha256(abi.encode(42)), sha256(abi.encode(42)), "Same number should produce same hash");
-    }
 }
