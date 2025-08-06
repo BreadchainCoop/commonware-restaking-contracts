@@ -7,7 +7,7 @@ import {ISlashingRegistryCoordinator} from "lib/eigenlayer-middleware/src/interf
 import {BLSMockAVSDeployer} from "lib/eigenlayer-middleware/test/utils/BLSMockAVSDeployer.sol";
 import {BitmapUtils} from "lib/eigenlayer-middleware/src/libraries/BitmapUtils.sol";
 import {BN254} from "lib/eigenlayer-middleware/src/libraries/BN254.sol";
-import {IBLSSignatureCheckerTypes} from "lib/eigenlayer-middleware/src/interfaces/IBLSSignatureChecker.sol";
+import {IBLSSignatureCheckerTypes, IBLSSignatureCheckerErrors} from "lib/eigenlayer-middleware/src/interfaces/IBLSSignatureChecker.sol";
 
 contract CounterTest is BLSMockAVSDeployer {
     using BN254 for BN254.G1Point;
@@ -75,7 +75,7 @@ contract CounterTest is BLSMockAVSDeployer {
 
         // This should pass the hash validation but fail at BLS signature verification
         // which is expected since the BLS signature is generated for a different message
-        vm.expectRevert(); // Expect some revert (likely BLS signature verification failure)
+        vm.expectRevert(IBLSSignatureCheckerErrors.InvalidBLSSignature.selector);
         counter.increment(correctHash, quorumNumbers, referenceBlockNumber, nonSignerStakesAndSignature);
     }
 
@@ -92,7 +92,7 @@ contract CounterTest is BLSMockAVSDeployer {
         bytes32 correctHash = sha256(abi.encode(counter.number()));
 
         // This should pass the hash validation but fail at BLS signature verification
-        vm.expectRevert(); // Expect some revert (likely BLS signature verification failure)
+        vm.expectRevert(IBLSSignatureCheckerErrors.InvalidBLSSignature.selector);
         counter.increment(correctHash, quorumNumbers, referenceBlockNumber, nonSignerStakesAndSignature);
     }
 
@@ -109,7 +109,7 @@ contract CounterTest is BLSMockAVSDeployer {
         bytes32 correctHash = sha256(abi.encode(counter.number()));
 
         // This should pass the hash validation but fail at BLS signature verification
-        vm.expectRevert(); // Expect some revert (likely BLS signature verification failure)
+        vm.expectRevert(IBLSSignatureCheckerErrors.InvalidBLSSignature.selector);
         counter.increment(correctHash, quorumNumbers, referenceBlockNumber, nonSignerStakesAndSignature);
     }
 
@@ -126,7 +126,7 @@ contract CounterTest is BLSMockAVSDeployer {
         bytes32 correctHash = sha256(abi.encode(counter.number()));
 
         // This should pass the hash validation but fail at BLS signature verification
-        vm.expectRevert(); // Expect some revert (likely BLS signature verification failure)
+        vm.expectRevert(IBLSSignatureCheckerErrors.InvalidBLSSignature.selector);
         counter.increment(correctHash, quorumNumbers, referenceBlockNumber, nonSignerStakesAndSignature);
     }
 
@@ -142,7 +142,7 @@ contract CounterTest is BLSMockAVSDeployer {
 
         // Test with current block number (should pass hash validation but fail BLS verification)
         bytes32 correctHash = sha256(abi.encode(counter.number()));
-        vm.expectRevert(); // Expect some revert (likely BLS signature verification failure)
+        vm.expectRevert(IBLSSignatureCheckerErrors.InvalidBLSSignature.selector);
         counter.increment(correctHash, quorumNumbers, referenceBlockNumber, nonSignerStakesAndSignature);
     }
 }
