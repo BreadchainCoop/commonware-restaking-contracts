@@ -7,7 +7,10 @@ import {ISlashingRegistryCoordinator} from "lib/eigenlayer-middleware/src/interf
 import {BLSMockAVSDeployer} from "lib/eigenlayer-middleware/test/utils/BLSMockAVSDeployer.sol";
 import {BitmapUtils} from "lib/eigenlayer-middleware/src/libraries/BitmapUtils.sol";
 import {BN254} from "lib/eigenlayer-middleware/src/libraries/BN254.sol";
-import {IBLSSignatureCheckerTypes, IBLSSignatureCheckerErrors} from "lib/eigenlayer-middleware/src/interfaces/IBLSSignatureChecker.sol";
+import {
+    IBLSSignatureCheckerTypes,
+    IBLSSignatureCheckerErrors
+} from "lib/eigenlayer-middleware/src/interfaces/IBLSSignatureChecker.sol";
 
 contract CounterTest is BLSMockAVSDeployer {
     using BN254 for BN254.G1Point;
