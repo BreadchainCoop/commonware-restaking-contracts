@@ -27,7 +27,7 @@ contract CounterScript is Script {
     function _writeDeploymentJson(uint256 chainId) internal {
         string memory outputPath = "script/deployments/counter/";
         string memory fileName = string.concat(outputPath, vm.toString(chainId), ".json");
-        
+
         // Create directory if it doesn't exist
         if (!vm.exists(outputPath)) {
             vm.createDir(outputPath, true);
@@ -42,16 +42,21 @@ contract CounterScript is Script {
 
     function _generateDeploymentJson() private view returns (string memory) {
         return string.concat(
-            '{\n',
+            "{\n",
             '  "lastUpdate": {\n',
-            '    "timestamp": "', vm.toString(block.timestamp), '",\n',
-            '    "block_number": "', vm.toString(block.number), '"\n',
-            '  },\n',
+            '    "timestamp": "',
+            vm.toString(block.timestamp),
+            '",\n',
+            '    "block_number": "',
+            vm.toString(block.number),
+            '"\n',
+            "  },\n",
             '  "addresses": {\n',
-            '    "counter": "', vm.toString(address(counter)), '"\n',
-            '  }\n',
-            '}'
+            '    "counter": "',
+            vm.toString(address(counter)),
+            '"\n',
+            "  }\n",
+            "}"
         );
     }
 }
-
