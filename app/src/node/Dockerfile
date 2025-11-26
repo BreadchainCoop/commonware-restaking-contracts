@@ -11,13 +11,14 @@ WORKDIR /app
 
 # Copy workspace manifests first for better caching
 # Note: Build context is project root, so we copy from app/ directory
-COPY app/Cargo.toml app/Cargo.lock ./
+COPY app/Cargo.toml ./
 COPY app/src/Cargo.toml ./src/Cargo.toml
 COPY app/src/bindings/Cargo.toml ./src/bindings/Cargo.toml
 COPY app/src/router/Cargo.toml ./src/router/Cargo.toml
 COPY app/src/node/Cargo.toml ./src/node/Cargo.toml
 
 # Create placeholder targets for workspace members so Cargo can resolve manifests
+# Cargo.lock will be generated if it doesn't exist
 RUN mkdir -p src/bindings/src src/router/src src/node/src \
     && echo 'pub fn _placeholder(){}' > src/lib.rs \
     && echo 'pub fn _placeholder(){}' > src/bindings/src/lib.rs \

@@ -14,7 +14,6 @@ contracts/broadcast/**/dry-run/
 # Rust
 target/
 **/*.rs.bk
-Cargo.lock
 
 # Docs
 docs/
