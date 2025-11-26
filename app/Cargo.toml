@@ -1,11 +1,5 @@
 [workspace]
-members = [
-    "src",
-    "src/bindings",
-    "src/router",
-    "src/node",
-    "scripts",
-]
+members = ["src", "src/bindings", "src/router", "src/node"]
 resolver = "2"
 
 [workspace.package]
@@ -63,4 +57,3 @@ tower-http = "0.5"
 tracing = "0.1.41"
 tracing-subscriber = "0.3.19"
 url = { version = "2.5.4", features = ["serde"] }
-

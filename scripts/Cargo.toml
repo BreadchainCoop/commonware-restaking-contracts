@@ -10,7 +10,7 @@ path = "verify_increments.rs"
 [dependencies]
 alloy = { workspace = true }
 alloy-provider = { workspace = true }
-commonware-avs-bindings = { path = "../src/bindings" }
+commonware-avs-bindings = { path = "./src/bindings" }
 commonware-avs-core = { git = "https://github.com/BreadchainCoop/commonware-restaking", branch = "remove-counter-example" }
 dotenv = { workspace = true }
 serde = { workspace = true }
