@@ -1,0 +1,23 @@
+{
+  "lastUpdate": {
+    "timestamp": "1764173420",
+    "block_number": "4775175"
+  },
+  "addresses": {
+    "proxyAdmin": "0xf2e724edbc6318279d0c2edfcf6002deee8488fa",
+    "IncredibleSquaringServiceManager": "0x497e2b02b296c4aed89e48ce25671011492ad1c3",
+    "incredibleSquaringServiceManagerImpl": "0x293dd9f3ad489c6fd6aeda707bf061dcb09519c5",
+    "IncredibleSquaringTaskManager": "0x9d62b3e802de9a43960bf6aef1f0827d56e57f50",
+    "registryCoordinator": "0xd6a0118d8ec40d5b06f4600cfea7fbea7a523093",
+    "blsapkRegistry": "0x6d12a9374bc8af375f48686aeb67b95ee72e8afa",
+    "indexRegistry": "0xbf31caad13553b94e1e9de4aa6842f08c90e7ce8",
+    "stakeRegistry": "0x8aed253c3c2555ace1e501dd814a76fc42426b18",
+    "operatorStateRetriever": "0x958562df4b88d426a4673b9330c055f33787e6a4",
+    "strategy": "0x7d704507b76571a51d9cae8addabbfd0ba0e63d3",
+    "pauserRegistry": "0x0000000000000000000000000000000000000000",
+    "token": "0xe6daf70c50fc0d8fde1789f97eac5e7991e5d757",
+    "instantSlasher": "0x303b5fd48d0b13dba4ec9f7b2263e352dfc51abe",
+    "counter": "0x5BDAB41480B842081f8ED1885a0ab76A6e7324CE",
+    "blsSigCheck": "0xFFB3911DAD5Bfec3d92E8058baf6c4b74dC32EFC"
+  }
+}

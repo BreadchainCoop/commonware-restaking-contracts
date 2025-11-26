@@ -1,0 +1,18 @@
+[package]
+name = "avs-scripts"
+version = "0.1.0"
+edition = "2024"
+
+[[bin]]
+name = "verify_increments"
+path = "verify_increments.rs"
+
+[dependencies]
+alloy = { workspace = true }
+alloy-provider = { workspace = true }
+commonware-avs-bindings = { path = "../src/bindings" }
+commonware-avs-core = { git = "https://github.com/BreadchainCoop/commonware-restaking", branch = "remove-counter-example" }
+dotenv = { workspace = true }
+serde = { workspace = true }
+tokio = { workspace = true }
+url = { workspace = true }

@@ -1,0 +1,35 @@
+[package]
+name = "commonware-avs-router-app"
+version = "0.1.0"
+edition = "2024"
+
+[[bin]]
+name = "commonware-avs-router-app"
+path = "src/app.rs"
+
+[dependencies]
+alloy = { workspace = true }
+alloy-primitives = { workspace = true }
+alloy-provider = { workspace = true }
+alloy-signer-local = { workspace = true }
+anyhow = { workspace = true }
+ark-bn254 = { workspace = true }
+async-trait = { workspace = true }
+clap = { workspace = true }
+commonware-avs-bindings = { git = "https://github.com/BreadchainCoop/commonware-restaking", branch = "remove-counter-example" }
+commonware-avs-core = { git = "https://github.com/BreadchainCoop/commonware-restaking", branch = "remove-counter-example" }
+commonware-avs-counter = { path = ".." }
+commonware-avs-router = { git = "https://github.com/BreadchainCoop/commonware-restaking", branch = "remove-counter-example" }
+commonware-cryptography = { workspace = true }
+commonware-p2p = { workspace = true }
+commonware-runtime = { workspace = true }
+commonware-utils = { workspace = true }
+dotenv = { workspace = true }
+eigen-logging = { workspace = true }
+governor = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tokio = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+url = { workspace = true }
