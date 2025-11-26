@@ -1,4 +1,4 @@
-name: CI
+name: Foundry CI
 
 on:
   push:
@@ -21,15 +21,18 @@ jobs:
         uses: foundry-rs/foundry-toolchain@v1
 
       - name: Show Forge version
+        working-directory: contracts
         run: |
           forge --version
 
       - name: Run Forge fmt
+        working-directory: contracts
         run: |
           forge fmt --check
         id: fmt
 
       - name: Run Forge tests
+        working-directory: contracts
         run: |
           forge test -vvv
         id: test
