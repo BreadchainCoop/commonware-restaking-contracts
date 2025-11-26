@@ -4,11 +4,10 @@ pragma solidity ^0.8.13;
 import {BLSSignatureChecker} from "lib/eigenlayer-middleware/src/BLSSignatureChecker.sol";
 import {ISlashingRegistryCoordinator} from "lib/eigenlayer-middleware/src/interfaces/ISlashingRegistryCoordinator.sol";
 
+/// @title Counter
+/// @notice A simple counter contract that implements BLS signature checking
+/// @dev Inherits from BLSSignatureChecker
 contract Counter is BLSSignatureChecker {
-    /// @title Counter
-    /// @notice A simple counter contract that implements BLS signature checking
-    /// @dev Inherits from BLSSignatureChecker
-    /// @param _registryCoordinator The address of the registry coordinator contract
     /// @notice The current number
     uint256 public number;
     /// @notice The block number stale measure
@@ -27,8 +26,14 @@ contract Counter is BLSSignatureChecker {
     /// @notice The error for insufficient quorum threshold
     error InsufficientQuorumThreshold();
 
+    /// @param _registryCoordinator The address of the registry coordinator contract
     constructor(ISlashingRegistryCoordinator _registryCoordinator) BLSSignatureChecker(_registryCoordinator) {}
 
+    /// @notice Increments the counter
+    /// @param msgHash The hash of the message to increment the counter
+    /// @param quorumNumbers The quorum numbers
+    /// @param referenceBlockNumber The reference block number
+    /// @param params The parameters for the signature check
     function increment(
         bytes32 msgHash,
         bytes calldata quorumNumbers,
