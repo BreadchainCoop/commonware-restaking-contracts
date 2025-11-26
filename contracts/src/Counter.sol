@@ -9,7 +9,6 @@ contract Counter is BLSSignatureChecker {
     /// @notice A simple counter contract that implements BLS signature checking
     /// @dev Inherits from BLSSignatureChecker
     /// @param _registryCoordinator The address of the registry coordinator contract
-
     /// @notice The current number
     uint256 public number;
     /// @notice The block number stale measure
