@@ -11,6 +11,7 @@ NC='\033[0m' # No Color
 # Configuration
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
+APP_DIR="$PROJECT_ROOT/app"
 LOG_DIR="$PROJECT_ROOT/logs"
 
 # Create logs directory
@@ -33,40 +34,42 @@ echo "Logs directory: $LOG_DIR"
 
 # Step 1: Build verification script
 echo -e "${YELLOW}Step 1: Building verification script...${NC}"
-cd "$PROJECT_ROOT"
+cd "$SCRIPT_DIR"
 cargo build --release --bin verify_increments --quiet
 
 # Step 2: Set up environment files
 echo -e "${YELLOW}Step 2: Setting up environment files...${NC}"
 
 # Copy config template
-cp config/config.example.json config/config.json
+cp "$PROJECT_ROOT/config/config.example.json" "$PROJECT_ROOT/config/config.json"
 
 # Update .env for local mode
 echo "Configuring .env for local mode..."
-sed -i '' 's|^HTTP_RPC=.*|HTTP_RPC=http://localhost:8545|' .env
-sed -i '' 's|^WS_RPC=.*|WS_RPC=ws://localhost:8545|' .env
-sed -i '' 's|^RPC_URL=.*|RPC_URL=http://ethereum:8545|' .env
-sed -i '' 's|^ENVIRONMENT=.*|ENVIRONMENT=LOCAL|' .env
+ENV_FILE="$PROJECT_ROOT/.env"
+sed -i '' 's|^HTTP_RPC=.*|HTTP_RPC=http://localhost:8545|' "$ENV_FILE"
+sed -i '' 's|^WS_RPC=.*|WS_RPC=ws://localhost:8545|' "$ENV_FILE"
+sed -i '' 's|^RPC_URL=.*|RPC_URL=http://ethereum:8545|' "$ENV_FILE"
+sed -i '' 's|^ENVIRONMENT=.*|ENVIRONMENT=LOCAL|' "$ENV_FILE"
 
 # Use default Anvil private key for testing
 DEFAULT_PRIVATE_KEY="0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80"
-sed -i '' "s|^PRIVATE_KEY=.*|PRIVATE_KEY=$DEFAULT_PRIVATE_KEY|" .env
-sed -i '' "s|^FUNDED_KEY=.*|FUNDED_KEY=$DEFAULT_PRIVATE_KEY|" .env
+sed -i '' "s|^PRIVATE_KEY=.*|PRIVATE_KEY=$DEFAULT_PRIVATE_KEY|" "$ENV_FILE"
+sed -i '' "s|^FUNDED_KEY=.*|FUNDED_KEY=$DEFAULT_PRIVATE_KEY|" "$ENV_FILE"
 
 # Set Holesky contract addresses for LOCAL mode
-sed -i '' 's|^#DELEGATION_MANAGER_ADDRESS=|DELEGATION_MANAGER_ADDRESS=|' .env
-sed -i '' 's|^#STRATEGY_MANAGER_ADDRESS=|STRATEGY_MANAGER_ADDRESS=|' .env
-sed -i '' 's|^#LST_CONTRACT_ADDRESS=|LST_CONTRACT_ADDRESS=|' .env
-sed -i '' 's|^#LST_STRATEGY_ADDRESS=|LST_STRATEGY_ADDRESS=|' .env
-sed -i '' 's|^#BLS_SIGNATURE_CHECKER_ADDRESS=|BLS_SIGNATURE_CHECKER_ADDRESS=|' .env
-sed -i '' 's|^#OPERATOR_STATE_RETRIEVER_ADDRESS=|OPERATOR_STATE_RETRIEVER_ADDRESS=|' .env
-sed -i '' 's|^#ALLOCATION_MANAGER_ADDRESS=|ALLOCATION_MANAGER_ADDRESS=|' .env
+sed -i '' 's|^#DELEGATION_MANAGER_ADDRESS=|DELEGATION_MANAGER_ADDRESS=|' "$ENV_FILE"
+sed -i '' 's|^#STRATEGY_MANAGER_ADDRESS=|STRATEGY_MANAGER_ADDRESS=|' "$ENV_FILE"
+sed -i '' 's|^#LST_CONTRACT_ADDRESS=|LST_CONTRACT_ADDRESS=|' "$ENV_FILE"
+sed -i '' 's|^#LST_STRATEGY_ADDRESS=|LST_STRATEGY_ADDRESS=|' "$ENV_FILE"
+sed -i '' 's|^#BLS_SIGNATURE_CHECKER_ADDRESS=|BLS_SIGNATURE_CHECKER_ADDRESS=|' "$ENV_FILE"
+sed -i '' 's|^#OPERATOR_STATE_RETRIEVER_ADDRESS=|OPERATOR_STATE_RETRIEVER_ADDRESS=|' "$ENV_FILE"
+sed -i '' 's|^#ALLOCATION_MANAGER_ADDRESS=|ALLOCATION_MANAGER_ADDRESS=|' "$ENV_FILE"
 
 echo "Environment configuration complete"
 
 # Step 3: Pull Docker images
 echo -e "${YELLOW}Step 3: Pulling Docker images...${NC}"
+cd "$PROJECT_ROOT"
 docker compose pull
 
 # Step 4: Start Docker Compose services
@@ -83,7 +86,7 @@ elapsed=0
 
 while [ $elapsed -lt $timeout ]; do
     # Check if eigenlayer container has completed setup
-    if docker compose logs eigenlayer 2>/dev/null | grep -q "Operator 3 weight in quorum" && [ -f config/.nodes/avs_deploy.json ]; then
+    if docker compose logs eigenlayer 2>/dev/null | grep -q "Operator 3 weight in quorum" && [ -f "$PROJECT_ROOT/config/.nodes/avs_deploy.json" ]; then
         echo -e "${GREEN}EigenLayer setup completed successfully${NC}"
         break
     fi
@@ -121,11 +124,11 @@ sleep 120
 
 # Step 8: Verify increments
 echo -e "${YELLOW}Step 8: Verifying counter increments...${NC}"
-cd "$PROJECT_ROOT"
+cd "$SCRIPT_DIR"
 
 # Source environment and run verification
-source .env
-export AVS_DEPLOYMENT_PATH="config/.nodes/avs_deploy.json"
+source "$PROJECT_ROOT/.env"
+export AVS_DEPLOYMENT_PATH="$PROJECT_ROOT/config/.nodes/avs_deploy.json"
 
 if [ ! -f "$AVS_DEPLOYMENT_PATH" ]; then
     echo -e "${RED}Deployment file not found at $AVS_DEPLOYMENT_PATH${NC}"
@@ -133,7 +136,7 @@ if [ ! -f "$AVS_DEPLOYMENT_PATH" ]; then
 fi
 
 echo "Running verification..."
-cargo run -p avs-scripts --release --bin verify_increments
+cargo run --release --bin verify_increments
 
 if [ $? -eq 0 ]; then
     echo -e "${GREEN}✅ Integration test PASSED! Counter was incremented successfully.${NC}"

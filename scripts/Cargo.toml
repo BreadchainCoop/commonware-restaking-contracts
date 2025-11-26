@@ -8,11 +8,11 @@ name = "verify_increments"
 path = "verify_increments.rs"
 
 [dependencies]
-alloy = { workspace = true }
-alloy-provider = { workspace = true }
-commonware-avs-bindings = { path = "./src/bindings" }
+alloy = "1.0"
+alloy-provider = "1.0"
+commonware-avs-bindings = { path = "../app/src/bindings" }
 commonware-avs-core = { git = "https://github.com/BreadchainCoop/commonware-restaking", branch = "remove-counter-example" }
-dotenv = { workspace = true }
-serde = { workspace = true }
-tokio = { workspace = true }
-url = { workspace = true }
+dotenv = "0.15.0"
+serde = { version = "1.0.219", features = ["derive"] }
+tokio = { version = "1.0", features = ["full"] }
+url = { version = "2.5.4", features = ["serde"] }

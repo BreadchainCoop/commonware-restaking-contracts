@@ -1,36 +1,25 @@
-FROM rust:1.83-slim AS builder
+FROM rust:1.91-slim AS builder
 WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends pkg-config libssl-dev && rm -rf /var/lib/apt/lists/*
 
 # Copy workspace manifests and member manifests for dependency resolution
-COPY Cargo.toml Cargo.lock rust-toolchain.toml ./
-COPY core/Cargo.toml ./core/Cargo.toml
-COPY bindings/Cargo.toml ./bindings/Cargo.toml
-COPY node/Cargo.toml ./node/Cargo.toml
-COPY scripts/Cargo.toml ./scripts/Cargo.toml
-COPY router/Cargo.toml ./router/Cargo.toml
-COPY usecases/Cargo.toml ./usecases/Cargo.toml
-COPY usecases/counter/router/Cargo.toml ./usecases/counter/router/Cargo.toml
-COPY usecases/counter/node/Cargo.toml ./usecases/counter/node/Cargo.toml
+# Note: Build context is project root, so we copy from app/ directory
+COPY app/Cargo.toml app/Cargo.lock ./
+COPY app/src/Cargo.toml ./src/Cargo.toml
+COPY app/src/bindings/Cargo.toml ./src/bindings/Cargo.toml
+COPY app/src/router/Cargo.toml ./src/router/Cargo.toml
+COPY app/src/node/Cargo.toml ./src/node/Cargo.toml
 
 # Create placeholder targets for workspace members so Cargo can resolve manifests
-RUN mkdir -p core/src bindings/src router/src node/src scripts/src usecases/src usecases/counter/router/src usecases/counter/node/src \
-    && echo 'pub fn _placeholder(){}' > core/src/lib.rs \
-    && echo 'pub fn _placeholder(){}' > bindings/src/lib.rs \
-    && echo 'pub fn _placeholder(){}' > router/src/lib.rs \
-    && echo 'pub fn _placeholder(){}' > node/src/lib.rs \
-    && echo 'fn main(){}' > scripts/src/main.rs \
-    && echo 'pub fn _placeholder(){}' > usecases/src/lib.rs \
-    && echo 'fn main(){}' > usecases/counter/router/src/app.rs \
-    && echo 'fn main(){}' > usecases/counter/node/src/app.rs \
+RUN mkdir -p src/bindings/src src/router/src src/node/src \
+    && echo 'pub fn _placeholder(){}' > src/lib.rs \
+    && echo 'pub fn _placeholder(){}' > src/bindings/src/lib.rs \
+    && echo 'pub fn _placeholder(){}' > src/router/src/lib.rs \
+    && echo 'fn main(){}' > src/node/src/app.rs \
     && cargo fetch
 
 # Copy sources needed to build the router package
-COPY core ./core
-COPY bindings ./bindings
-COPY router ./router
-COPY node ./node
-COPY usecases ./usecases
+COPY app/src ./src
 
 # Build only the router binary from the workspace
 ARG BUILD_JOBS=2
