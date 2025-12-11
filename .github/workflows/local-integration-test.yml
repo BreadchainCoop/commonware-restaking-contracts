@@ -11,6 +11,9 @@ jobs:
   local-integration-test:
     name: Local Integration Test (No Docker Build)
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
 
     steps:
       - name: Checkout repository
