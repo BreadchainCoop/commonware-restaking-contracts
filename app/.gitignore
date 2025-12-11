@@ -1,0 +1,12 @@
+# Rust
+target/
+**/*.rs.bk
+
+# Logs
+logs/
+
+# Dotenv file
+.env
+
+# Mac OS files
+.DS_Store

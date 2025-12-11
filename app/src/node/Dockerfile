@@ -1,4 +1,3 @@
-# Build stage
 FROM rust:1.91-slim AS builder
 
 RUN apt-get update && apt-get install -y \
@@ -9,25 +8,28 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-# Copy workspace manifests first for better caching
-# Note: Build context is project root, so we copy from app/ directory
-COPY app/Cargo.toml ./
-COPY app/src/Cargo.toml ./src/Cargo.toml
-COPY app/src/bindings/Cargo.toml ./src/bindings/Cargo.toml
-COPY app/src/router/Cargo.toml ./src/router/Cargo.toml
-COPY app/src/node/Cargo.toml ./src/node/Cargo.toml
+# Copy workspace manifests and member manifests for dependency resolution
+COPY Cargo.toml ./
+COPY src/Cargo.toml ./src/Cargo.toml
+COPY src/bindings/Cargo.toml ./src/bindings/Cargo.toml
+COPY src/common/Cargo.toml ./src/common/Cargo.toml
+COPY src/router/Cargo.toml ./src/router/Cargo.toml
+COPY src/node/Cargo.toml ./src/node/Cargo.toml
+COPY scripts/Cargo.toml ./scripts/Cargo.toml
 
 # Create placeholder targets for workspace members so Cargo can resolve manifests
 # Cargo.lock will be generated if it doesn't exist
-RUN mkdir -p src/bindings/src src/router/src src/node/src \
+RUN mkdir -p src/bindings/src src/common/src src/router/src src/node/src scripts \
     && echo 'pub fn _placeholder(){}' > src/lib.rs \
     && echo 'pub fn _placeholder(){}' > src/bindings/src/lib.rs \
+    && echo 'pub fn _placeholder(){}' > src/common/src/lib.rs \
     && echo 'pub fn _placeholder(){}' > src/router/src/lib.rs \
-    && echo 'fn main(){}' > src/node/src/app.rs \
+    && echo 'pub fn _placeholder(){}' > src/node/src/app.rs \
+    && echo 'pub fn _placeholder(){}' > scripts/verify_increments.rs \
     && cargo fetch
 
 # Copy sources
-COPY app/src ./src
+COPY src ./src
 
 # Build only the node binary from the workspace
 ARG BUILD_JOBS=2

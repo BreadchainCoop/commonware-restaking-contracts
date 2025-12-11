@@ -1,21 +1,25 @@
 [workspace]
-members = ["src", "src/bindings", "src/router", "src/node"]
+members = [
+    "src",
+    "src/bindings",
+    "src/common",
+    "src/router",
+    "src/node",
+    "scripts",
+]
 resolver = "2"
 
 [workspace.package]
 edition = "2024"
 
 [workspace.dependencies]
-# Core dependencies shared across packages
 alloy = "1.0"
 alloy-network = "1.0"
 alloy-primitives = "1.0"
-# Alloy ecosystem
 alloy-provider = "1.0"
 alloy-signer = "1.0"
 alloy-signer-local = "1.0"
 anyhow = "1.0"
-# Arkworks and bn254
 ark-bn254 = "0.5.0"
 ark-ec = "0.5.0"
 ark-ff = "0.5.0"
@@ -24,7 +28,9 @@ async-trait = "0.1"
 axum = "0.7"
 bytes = "1.10.1"
 clap = "4.5.37"
-# Commonware crates
+commonware-avs-core = { git = "https://github.com/BreadchainCoop/commonware-restaking", branch = "remove-counter-example" }
+commonware-avs-node = { git = "https://github.com/BreadchainCoop/commonware-restaking", branch = "remove-counter-example" }
+commonware-avs-router = { git = "https://github.com/BreadchainCoop/commonware-restaking", branch = "remove-counter-example" }
 commonware-codec = "0.0.63"
 commonware-cryptography = "0.0.63"
 commonware-macros = "0.0.63"

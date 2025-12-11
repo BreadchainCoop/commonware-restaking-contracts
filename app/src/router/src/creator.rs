@@ -4,7 +4,7 @@ use std::sync::Arc;
 use tracing::error;
 
 use crate::provider::CounterProvider;
-use commonware_avs_counter::CounterTaskData;
+use commonware_avs_counter_common::CounterTaskData;
 use commonware_avs_router::creator::{Creator, CreatorConfig, SimpleTaskQueue, TaskQueue};
 use commonware_avs_router::ingress::types::TaskRequest;
 

@@ -17,9 +17,9 @@ ark-bn254 = { workspace = true }
 async-trait = { workspace = true }
 clap = { workspace = true }
 commonware-avs-bindings = { path = "../bindings" }
-commonware-avs-core = { git = "https://github.com/BreadchainCoop/commonware-restaking", branch = "remove-counter-example" }
-commonware-avs-counter = { path = ".." }
-commonware-avs-router = { git = "https://github.com/BreadchainCoop/commonware-restaking", branch = "remove-counter-example" }
+commonware-avs-core = { workspace = true }
+commonware-avs-counter-common = { path = "../common" }
+commonware-avs-router = { workspace = true }
 commonware-cryptography = { workspace = true }
 commonware-p2p = { workspace = true }
 commonware-runtime = { workspace = true }

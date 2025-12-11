@@ -1266,6 +1266,20 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c08606f8c3cbf4ce6ec8e28fb0014a2c086708fe954eaa885384a6165172e7e8"
 
 [[package]]
+name = "avs-scripts"
+version = "0.1.0"
+dependencies = [
+ "alloy",
+ "alloy-provider",
+ "commonware-avs-bindings 0.1.0",
+ "commonware-avs-core",
+ "dotenv",
+ "serde",
+ "tokio",
+ "url",
+]
+
+[[package]]
 name = "aws-config"
 version = "1.8.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2048,6 +2062,13 @@ dependencies = [
 name = "commonware-avs-counter"
 version = "0.1.0"
 dependencies = [
+ "commonware-avs-counter-common",
+]
+
+[[package]]
+name = "commonware-avs-counter-common"
+version = "0.1.0"
+dependencies = [
  "alloy",
  "alloy-primitives",
  "alloy-provider",
@@ -2115,7 +2136,7 @@ dependencies = [
  "async-trait",
  "clap",
  "commonware-avs-core",
- "commonware-avs-counter",
+ "commonware-avs-counter-common",
  "commonware-avs-node",
  "commonware-avs-router",
  "commonware-cryptography",
@@ -2195,7 +2216,7 @@ dependencies = [
  "clap",
  "commonware-avs-bindings 0.1.0",
  "commonware-avs-core",
- "commonware-avs-counter",
+ "commonware-avs-counter-common",
  "commonware-avs-router",
  "commonware-cryptography",
  "commonware-p2p",

@@ -11,10 +11,6 @@ contracts/out/
 contracts/broadcast/*/31337/
 contracts/broadcast/**/dry-run/
 
-# Rust
-target/
-**/*.rs.bk
-
 # Docs
 docs/
 

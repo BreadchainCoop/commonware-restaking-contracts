@@ -8,14 +8,4 @@ name = "commonware_avs_counter"
 path = "lib.rs"
 
 [dependencies]
-alloy = { workspace = true }
-alloy-primitives = { workspace = true }
-alloy-provider = { workspace = true }
-anyhow = { workspace = true }
-async-trait = { workspace = true }
-bytes = { workspace = true }
-commonware-avs-bindings = { path = "bindings" }
-commonware-avs-core = { git = "https://github.com/BreadchainCoop/commonware-restaking", branch = "remove-counter-example" }
-commonware-codec = { workspace = true }
-commonware-cryptography = { workspace = true }
-url = { workspace = true }
+commonware-avs-counter-common = { path = "common" }

@@ -1,5 +1,1 @@
-pub mod types;
-pub mod validator;
-
-pub use types::CounterTaskData;
-pub use validator::CounterValidator;
+pub use commonware_avs_counter_common::{CounterTaskData, CounterValidator};

@@ -265,7 +265,7 @@ pub fn main() {
         );
 
         // Validator
-        use commonware_avs_counter::CounterValidator;
+        use commonware_avs_counter_common::CounterValidator;
         let validator = CounterValidator::new()
             .await
             .expect("Failed to construct validator");
