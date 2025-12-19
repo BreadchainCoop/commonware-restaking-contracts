@@ -8,6 +8,9 @@ jobs:
   check:
     name: Format, Clippy, Check
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -20,23 +23,23 @@ jobs:
       - name: Cache cargo builds
         uses: Swatinem/rust-cache@v2
         with:
-          working-directory: app
+          workspaces: app -> target
 
       - name: cargo fmt --check
-        working-directory: app
         run: cargo fmt --all -- --check
 
       - name: cargo clippy (deny warnings)
-        working-directory: app
         run: cargo clippy --all-targets --all-features -- -D warnings
 
       - name: cargo check (all targets)
-        working-directory: app
         run: cargo check --all-targets --all-features
 
   test:
     name: Test
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -47,15 +50,17 @@ jobs:
       - name: Cache cargo builds
         uses: Swatinem/rust-cache@v2
         with:
-          working-directory: app
+          workspaces: app -> target
 
       - name: Run tests
-        working-directory: app
         run: cargo test --lib --all-features
 
   coverage:
     name: Code Coverage
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -66,11 +71,10 @@ jobs:
       - name: Cache cargo builds
         uses: Swatinem/rust-cache@v2
         with:
-          working-directory: app
+          workspaces: app -> target
 
       - name: Install cargo-tarpaulin
         run: cargo install cargo-tarpaulin
 
       - name: Generate coverage report
-        working-directory: app
         run: cargo tarpaulin --lib --all-features
