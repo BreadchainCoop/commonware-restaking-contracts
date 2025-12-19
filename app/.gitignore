@@ -1,9 +1,20 @@
-# Rust
+# Rust build artifacts
 target/
-**/*.rs.bk
+scripts/target/
 
-# Logs
+# Test artifacts
 logs/
+test_processes.pids
+*.log
+*.bak
+
+# Generated config files and directories
+config/config.json
+config/.nodes/**
+!config/.nodes/
+!config/.nodes/.gitkeep
+!config/.nodes/operator_keys/**
+!config/.nodes/operator_keys/.gitkeep
 
 # Dotenv file
 .env
