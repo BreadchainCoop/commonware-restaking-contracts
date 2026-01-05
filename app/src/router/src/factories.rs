@@ -9,7 +9,7 @@ use alloy_signer_local::PrivateKeySigner;
 use anyhow::Result;
 use commonware_avs_bindings::WalletProvider;
 use commonware_avs_bindings::counter::Counter;
-use commonware_avs_core::eigenlayer::config::AvsDeployment;
+use commonware_avs_counter_common::AvsDeployment;
 use commonware_avs_router::creator::{CreatorConfig, SimpleTaskQueue};
 use commonware_avs_router::ingress::http_server::start_http_server;
 use std::{env, str::FromStr};

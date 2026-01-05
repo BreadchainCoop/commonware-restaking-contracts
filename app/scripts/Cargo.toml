@@ -11,7 +11,7 @@ path = "verify_increments.rs"
 alloy = { workspace = true }
 alloy-provider = { workspace = true }
 commonware-avs-bindings = { path = "../src/bindings" }
-commonware-avs-core = { workspace = true }
+commonware-avs-counter-common = { path = "../src/common" }
 dotenv = { workspace = true }
 serde = { workspace = true, features = ["derive"] }
 tokio = { workspace = true, features = ["full"] }
