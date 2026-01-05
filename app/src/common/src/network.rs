@@ -235,4 +235,3 @@ impl EigenStakingClient {
         Ok(quorum_infos)
     }
 }
-

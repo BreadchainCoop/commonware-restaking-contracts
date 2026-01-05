@@ -1,7 +1,9 @@
 use ark_bn254::Fr;
 use clap::{Arg, Command};
 use commonware_avs_core::bn254::{Bn254, PrivateKey, PublicKey};
-use commonware_avs_counter_common::{CounterTaskData, CounterValidator, EigenStakingClient, QuorumInfo};
+use commonware_avs_counter_common::{
+    CounterTaskData, CounterValidator, EigenStakingClient, QuorumInfo,
+};
 use commonware_avs_node::contributor::{AggregationInput, Contribute};
 use commonware_p2p::Manager;
 use commonware_p2p::authenticated::lookup::{self, Network};
