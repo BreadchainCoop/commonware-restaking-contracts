@@ -7,7 +7,7 @@ use commonware_cryptography::sha256::Digest;
 use commonware_cryptography::{Hasher, Sha256};
 use std::{env, io::Cursor};
 
-use crate::config::AvsDeployment;
+use crate::AvsDeployment;
 use crate::types::CounterTaskData;
 use commonware_avs_bindings::{ReadOnlyProvider, counter::Counter};
 use commonware_avs_core::validator::ValidatorTrait;

@@ -2079,13 +2079,6 @@ dependencies = [
  "commonware-avs-core",
  "commonware-codec",
  "commonware-cryptography",
- "eigen-client-avsregistry",
- "eigen-common",
- "eigen-crypto-bls",
- "eigen-services-operatorsinfo",
- "eigen-utils",
- "serde",
- "serde_json",
  "url",
 ]
 
