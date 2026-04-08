@@ -7,7 +7,7 @@ import {ISlashingRegistryCoordinator} from "lib/eigenlayer-middleware/src/interf
 import {IAvsServiceManager} from "../src/interfaces/IAvsServiceManager.sol";
 import {Counter} from "../src/examples/Counter.sol";
 
-contract CounterScript is Script {
+contract DeployCounterScript is Script {
     Counter public counter;
 
     function setUp() public {}

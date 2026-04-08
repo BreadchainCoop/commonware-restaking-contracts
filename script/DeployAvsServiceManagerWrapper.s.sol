@@ -9,7 +9,7 @@ import {AvsServiceManagerWrapper} from "../src/AvsServiceManagerWrapper.sol";
 //   --rpc-url $RPC_URL --private-key $PRIVATE_KEY --broadcast
 //
 // Required env vars:
-//   AVS_SERVICE_MANAGER      - address of the underlying ServiceManager to wrap
+//   SERVICE_MANAGER_ADDRESS  - address of the underlying ServiceManager to wrap
 //
 // Optional env vars (defaults to 2/3 majority, 300 block stale measure):
 //   QUORUM_THRESHOLD         - numerator of the quorum threshold fraction (default: 2)
@@ -22,7 +22,7 @@ contract DeployAvsServiceManagerWrapper is Script {
     function setUp() public {}
 
     function run() public {
-        address serviceManager = vm.envAddress("AVS_SERVICE_MANAGER");
+        address serviceManager = vm.envAddress("SERVICE_MANAGER_ADDRESS");
         uint256 quorumThreshold = vm.envOr("QUORUM_THRESHOLD", uint256(2));
         uint256 thresholdDenominator = vm.envOr("THRESHOLD_DENOMINATOR", uint256(3));
         uint256 blockStaleMeasure = vm.envOr("BLOCK_STALE_MEASURE", uint256(300));
