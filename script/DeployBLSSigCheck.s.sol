@@ -2,8 +2,9 @@
 pragma solidity ^0.8.13;
 
 import {Script, console} from "forge-std/Script.sol";
-import {BLSSigCheckOperatorStateRetriever} from
-    "lib/eigenlayer-middleware/src/unaudited/BLSSigCheckOperatorStateRetriever.sol";
+import {
+    BLSSigCheckOperatorStateRetriever
+} from "lib/eigenlayer-middleware/src/unaudited/BLSSigCheckOperatorStateRetriever.sol";
 
 contract DeployBLSSigCheckScript is Script {
     BLSSigCheckOperatorStateRetriever public blsSigCheck;

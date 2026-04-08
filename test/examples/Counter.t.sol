@@ -1,9 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-import {Test, console} from "forge-std/Test.sol";
-import {Counter} from "../src/Counter.sol";
-import {ISlashingRegistryCoordinator} from "lib/eigenlayer-middleware/src/interfaces/ISlashingRegistryCoordinator.sol";
 import {BLSMockAVSDeployer} from "lib/eigenlayer-middleware/test/utils/BLSMockAVSDeployer.sol";
 import {BitmapUtils} from "lib/eigenlayer-middleware/src/libraries/BitmapUtils.sol";
 import {BN254} from "lib/eigenlayer-middleware/src/libraries/BN254.sol";
@@ -12,21 +9,27 @@ import {
     IBLSSignatureCheckerErrors
 } from "lib/eigenlayer-middleware/src/interfaces/IBLSSignatureChecker.sol";
 
+import {Counter} from "../../src/examples/Counter.sol";
+import {AvsServiceManagerWrapper} from "../../src/AvsServiceManagerWrapper.sol";
+
 contract CounterTest is BLSMockAVSDeployer {
     using BN254 for BN254.G1Point;
 
     Counter public counter;
+    AvsServiceManagerWrapper public avsServiceManager;
 
     function setUp() public virtual {
         _setUpBLSMockAVSDeployer();
-        counter = new Counter(registryCoordinator);
+        // Deploy wrapper with a mock underlying address; threshold values match old hardcoded defaults
+        avsServiceManager = new AvsServiceManagerWrapper(address(0x1234), 66, 100, 300);
+        counter = new Counter(registryCoordinator, avsServiceManager);
     }
 
     function test_InitialState() public {
         assertEq(counter.number(), 0, "Counter should start at 0");
-        assertEq(counter.BLOCK_STALE_MEASURE(), 300, "BLOCK_STALE_MEASURE should be 300");
-        assertEq(counter.QUORUM_THRESHOLD(), 66, "QUORUM_THRESHOLD should be 66");
-        assertEq(counter.THRESHOLD_DENOMINATOR(), 100, "THRESHOLD_DENOMINATOR should be 100");
+        assertEq(counter.AVS_SERVICE_MANAGER().BLOCK_STALE_MEASURE(), 300, "BLOCK_STALE_MEASURE should be 300");
+        assertEq(counter.AVS_SERVICE_MANAGER().QUORUM_THRESHOLD(), 66, "QUORUM_THRESHOLD should be 66");
+        assertEq(counter.AVS_SERVICE_MANAGER().THRESHOLD_DENOMINATOR(), 100, "THRESHOLD_DENOMINATOR should be 100");
     }
 
     function test_Increment_FutureBlockNumber() public {
