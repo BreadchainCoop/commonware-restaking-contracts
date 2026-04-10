@@ -80,9 +80,9 @@ contract AvsServiceManagerWrapperTest is Test {
     // Fallback forwarding
     // =========================================================================
 
-    function test_Fallback_ForwardsWriteCall() public {
+    function test_Fallback_RevertsOnWriteCall() public {
+        vm.expectRevert();
         MockServiceManager(address(wrapper)).setValue(42);
-        assertEq(mock.value(), 42);
     }
 
     function test_Fallback_ForwardsReadCall() public {
