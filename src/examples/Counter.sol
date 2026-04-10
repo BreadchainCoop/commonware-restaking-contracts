@@ -40,25 +40,23 @@ contract Counter is BLSSignatureChecker {
         uint32 referenceBlockNumber,
         NonSignerStakesAndSignature memory params
     ) public {
-        require(referenceBlockNumber < block.number, FutureBlockNumber());
-        require(
-            uint256(referenceBlockNumber) + AVS_SERVICE_MANAGER.BLOCK_STALE_MEASURE() >= block.number,
-            StaleBlockNumber()
-        );
+        if (referenceBlockNumber >= block.number) revert FutureBlockNumber();
+        if (uint256(referenceBlockNumber) + AVS_SERVICE_MANAGER.BLOCK_STALE_MEASURE() < block.number) {
+            revert StaleBlockNumber();
+        }
 
         bytes32 expectedHash = sha256(abi.encode(number));
-        require(msgHash == expectedHash, InvalidHash());
+        if (msgHash != expectedHash) revert InvalidHash();
 
         (QuorumStakeTotals memory stakeTotals,) = checkSignatures(msgHash, quorumNumbers, referenceBlockNumber, params);
 
         uint256 quorumThreshold = AVS_SERVICE_MANAGER.QUORUM_THRESHOLD();
         uint256 thresholdDenominator = AVS_SERVICE_MANAGER.THRESHOLD_DENOMINATOR();
         for (uint256 i = 0; i < quorumNumbers.length; i++) {
-            require(
+            if (
                 stakeTotals.signedStakeForQuorum[i] * thresholdDenominator
-                    >= stakeTotals.totalStakeForQuorum[i] * quorumThreshold,
-                InsufficientQuorumThreshold()
-            );
+                    < stakeTotals.totalStakeForQuorum[i] * quorumThreshold
+            ) revert InsufficientQuorumThreshold();
         }
         number++;
     }

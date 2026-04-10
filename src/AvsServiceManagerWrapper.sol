@@ -44,13 +44,15 @@ contract AvsServiceManagerWrapper is IAvsServiceManager {
         BLOCK_STALE_MEASURE = _blockStaleMeasure;
     }
 
-    /// @notice Forward any unrecognized call to the underlying SERVICE_MANAGER
-    /// @dev Uses `call` so msg.sender is the wrapper, not the original caller
+    /// @notice Forward any unrecognized call to the underlying SERVICE_MANAGER (read-only)
+    /// @dev Uses `staticcall` to prevent the wrapper from being used to execute
+    ///      privileged write operations on the underlying contract. Write functions
+    ///      should be called directly on the SERVICE_MANAGER address.
     fallback() external payable {
         address target = address(SERVICE_MANAGER);
         assembly {
             calldatacopy(0, 0, calldatasize())
-            let result := call(gas(), target, callvalue(), 0, calldatasize(), 0, 0)
+            let result := staticcall(gas(), target, 0, calldatasize(), 0, 0)
             returndatacopy(0, 0, returndatasize())
             switch result
             case 0 { revert(0, returndatasize()) }
